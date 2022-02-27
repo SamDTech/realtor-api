@@ -1,6 +1,9 @@
+import { UserType } from '@prisma/client';
 import {
   IsEmail,
+  IsEnum,
   IsNotEmpty,
+  IsOptional,
   IsString,
   Matches,
   MinLength,
@@ -15,13 +18,40 @@ export class SignupDto {
   @IsNotEmpty()
   email: string;
 
-  @Matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/, {
-    message: 'Phone number is not valid',
-  })
+  @Matches(
+    /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/,
+    {
+      message: 'Phone number is not valid',
+    },
+  )
   phone: string;
 
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
   password: string;
+
+  @IsOptional()
+  @IsString()
+  productKey?: string;
+}
+
+export class SigninDto {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(5)
+  password: string;
+}
+
+export class generateProductKeyDto {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsEnum(UserType)
+  userType: UserType;
 }

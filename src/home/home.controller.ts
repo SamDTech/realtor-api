@@ -50,13 +50,16 @@ export class HomeController {
     return this.homeService.createHome(createHomeDto);
   }
 
-  @Put()
-  updateHome() {
-    return {};
+  @Put(':id')
+  updateHome(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: Partial<CreateHomeDto>,
+  ) {
+    return this.homeService.updateHome(id, body);
   }
 
-  @Delete()
-  deleteHome() {
-    return {};
+  @Delete(':id')
+  deleteHome(@Param('id', ParseIntPipe) id: number) {
+    return this.homeService.deleteHome(id);
   }
 }

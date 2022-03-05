@@ -5,6 +5,7 @@ import {
   IsEnum,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
   Validate,
@@ -106,4 +107,47 @@ export class ImageDto {
   @IsString()
   @IsNotEmpty()
   url: string;
+}
+
+export class UpdateHomeDto {
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  address?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @IsNotEmpty()
+  numberOfRooms?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @IsNotEmpty()
+  numberOfBathrooms?: number;
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  city?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @IsPositive()
+  price?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @IsPositive()
+  landSize?: number;
+
+  @IsOptional()
+  @IsEnum(PropertyType)
+  @IsNotEmpty()
+  propertyType?: PropertyType;
+
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ImageDto)
+  images?: ImageDto[];
 }

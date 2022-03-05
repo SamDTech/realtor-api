@@ -60,24 +60,27 @@ export class AuthService {
         email,
       },
     });
+    console.log(user);
 
     if (!user) {
       throw new BadRequestException('User does not Exist');
     }
 
     const isPasswordMatch = await bcrypt.compare(password, user.password);
+    console.log(isPasswordMatch);
 
     if (!isPasswordMatch || !user) {
       throw new BadRequestException('Invalid Credentials');
     }
 
     const token = this.generateToken({ name: user.name, id: user.id });
+    console.log(token);
 
     return { token };
   }
 
-  async generateToken(payload: { name: string; id: number }): Promise<string> {
-    return await jwt.sign(payload, process.env.JWT_SECRET, {
+  generateToken(payload: { name: string; id: number }): string {
+    return jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: '7d',
     });
   }

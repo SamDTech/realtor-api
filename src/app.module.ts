@@ -1,3 +1,4 @@
+import { AuthGuard } from './user/auth/guards/auth.guard';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -14,6 +15,10 @@ import { UserInterceptor } from './user/interceptors/user.interceptor';
     {
       provide: 'APP_INTERCEPTOR',
       useClass: UserInterceptor,
+    },
+    {
+      provide: 'APP_GUARD',
+      useClass: AuthGuard,
     },
   ],
 })

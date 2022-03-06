@@ -55,7 +55,7 @@ export class HomeController {
   @UseGuards(AuthGuard)
   @Post()
   createHome(@Body() createHomeDto: CreateHomeDto, @User() user: IUser) {
-    // return this.homeService.createHome(createHomeDto, user.id);
+    return this.homeService.createHome(createHomeDto, user.id);
 
     return 'created';
   }

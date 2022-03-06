@@ -80,4 +80,9 @@ export class HomeController {
   deleteHome(@Param('id', ParseIntPipe) id: number, @User() user: IUser) {
     return this.homeService.deleteHome(id);
   }
+
+  @Post('inquire/:id')
+  inquaire(@Param('id', ParseIntPipe) homeId: number, @User() user: IUser) {
+  
+  }
 }

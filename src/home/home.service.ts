@@ -34,27 +34,29 @@ interface IUpdateHomeParams {
   propertyType?: PropertyType;
 }
 
+export const homeSelect = {
+  id: true,
+  address: true,
+  city: true,
+  price: true,
+  propertyType: true,
+  number_of_bathrooms: true,
+  number_of_rooms: true,
+  images: {
+    select: {
+      url: true,
+    },
+    take: 1,
+  },
+};
+
 @Injectable()
 export class HomeService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async getHomes(filter: IHomeParams): Promise<HomeResponseDto[]> {
     const homes = await this.prismaService.home.findMany({
-      select: {
-        id: true,
-        address: true,
-        city: true,
-        price: true,
-        propertyType: true,
-        number_of_bathrooms: true,
-        number_of_rooms: true,
-        images: {
-          select: {
-            url: true,
-          },
-          take: 1,
-        },
-      },
+      select: homeSelect,
 
       where: filter,
     });

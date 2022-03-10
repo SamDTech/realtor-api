@@ -1,7 +1,7 @@
 import { HomeResponseDto } from './dto/home.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Image, PropertyType } from '@prisma/client';
+import { PropertyType } from '@prisma/client';
 import { IUser } from 'src/user/decorators/user.decorator';
 
 interface IHomeParams {
@@ -201,6 +201,16 @@ export class HomeService {
     return this.prismaService.message.findMany({
       where: {
         home_id: homeId,
+      },
+      select: {
+        message: true,
+        buyer: {
+          select: {
+            phone: true,
+            name: true,
+            email: true,
+          },
+        },
       },
     });
   }

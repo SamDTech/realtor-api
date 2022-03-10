@@ -1,4 +1,3 @@
-import { AuthGuard } from './../user/auth/guards/auth.guard';
 import { IUser } from './../user/decorators/user.decorator';
 import { PropertyType, UserType } from '@prisma/client';
 import { CreateHomeDto, HomeResponseDto, InquireDto } from './dto/home.dto';
@@ -13,7 +12,6 @@ import {
   Put,
   Query,
   UnauthorizedException,
-  UseGuards,
 } from '@nestjs/common';
 import { HomeService } from './home.service';
 import { User } from 'src/user/decorators/user.decorator';
@@ -77,7 +75,7 @@ export class HomeController {
 
   @Roles(UserType.REALTOR, UserType.ADMIN)
   @Delete(':id')
-  deleteHome(@Param('id', ParseIntPipe) id: number, @User() user: IUser) {
+  deleteHome(@Param('id', ParseIntPipe) id: number) {
     return this.homeService.deleteHome(id);
   }
 

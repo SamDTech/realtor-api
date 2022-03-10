@@ -1,4 +1,4 @@
-import { PropertyType, UserType } from '@prisma/client';
+import { PropertyType } from '@prisma/client';
 import { Exclude, Expose, Type } from 'class-transformer';
 import {
   IsArray,
@@ -8,7 +8,6 @@ import {
   IsOptional,
   IsPositive,
   IsString,
-  Validate,
   ValidateNested,
 } from 'class-validator';
 

@@ -151,3 +151,9 @@ export class UpdateHomeDto {
   @Type(() => ImageDto)
   images?: ImageDto[];
 }
+
+export class InquireDto {
+  @IsString()
+  @IsNotEmpty()
+  message: string;
+}

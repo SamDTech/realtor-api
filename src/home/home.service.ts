@@ -2,6 +2,7 @@ import { HomeResponseDto } from './dto/home.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Image, PropertyType } from '@prisma/client';
+import { IUser } from 'src/user/decorators/user.decorator';
 
 interface IHomeParams {
   city?: string;
@@ -181,5 +182,26 @@ export class HomeService {
     }
 
     return home.realtor;
+  }
+
+  async inquire(homeId: number, buyer: IUser, message: string) {
+    const realtor = await this.getRealtorByHomeId(homeId);
+
+    return await this.prismaService.message.create({
+      data: {
+        message,
+        buyer_id: buyer.id,
+        realtor_id: realtor.id,
+        home_id: homeId,
+      },
+    });
+  }
+
+  getHomeMessages(homeId: number) {
+    return this.prismaService.message.findMany({
+      where: {
+        home_id: homeId,
+      },
+    });
   }
 }
